@@ -72,10 +72,8 @@ public class Main {
         queue.insert(-12);
         queue.insert(-7);
 
-        if (!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             System.out.print(queue.remove() + " ");
-        } else {
-            System.out.println("THERE’S NOTHING HERE!!!!");
         }
     }
 }
