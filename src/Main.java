@@ -69,8 +69,6 @@ public class Main {
         queue.insert(111);
         queue.insert(53);
         queue.insert(12);
-        queue.insert(-12);
-        queue.insert(-7);
 
         while (!queue.isEmpty()) {
             System.out.print(queue.remove() + " ");
