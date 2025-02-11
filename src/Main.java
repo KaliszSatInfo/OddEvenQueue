@@ -10,12 +10,7 @@ class Node {
     }
 }
 
-interface IQueue {
-    void insert(int value);
-    int remove();
-}
-
-class Queue implements IQueue {
+class Queue {
     protected Node head;
     protected Node tail;
 
@@ -24,20 +19,6 @@ class Queue implements IQueue {
         this.tail = null;
     }
 
-    @Override
-    public void insert(int value) {
-        Node newNode = new Node(value);
-        if (tail == null) {
-            head = newNode;
-            tail = newNode;
-        } else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
-        }
-    }
-
-    @Override
     public int remove() {
         if (head == null) {
             throw new IllegalStateException("Queue is empty");
@@ -58,7 +39,6 @@ class Queue implements IQueue {
 }
 
 class PriorityQueue extends Queue {
-    @Override
     public void insert(int value) {
         Node newNode = new Node(value);
         if (head == null) {
@@ -89,9 +69,13 @@ public class Main {
         queue.insert(111);
         queue.insert(53);
         queue.insert(12);
+        queue.insert(-12);
+        queue.insert(-7);
 
-        while (!queue.isEmpty()) {
+        if (!queue.isEmpty()) {
             System.out.print(queue.remove() + " ");
+        } else {
+            System.out.println("THERE’S NOTHING HERE!!!!");
         }
     }
 }
