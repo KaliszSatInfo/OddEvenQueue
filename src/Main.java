@@ -1,3 +1,6 @@
+interface IQueue {
+}
+
 class Node {
     int data;
     Node next;
@@ -10,7 +13,7 @@ class Node {
     }
 }
 
-class Queue {
+class Queue implements IQueue {
     protected Node head;
     protected Node tail;
 
@@ -32,10 +35,6 @@ class Queue {
         }
         return value;
     }
-
-    public boolean isEmpty() {
-        return head == null;
-    }
 }
 
 class PriorityQueue extends Queue {
@@ -48,9 +47,26 @@ class PriorityQueue extends Queue {
         }
 
         if (value % 2 != 0) {
-            newNode.next = head;
-            head.prev = newNode;
-            head = newNode;
+            Node current = head;
+            Node lastOdd = null;
+            while (current != null && current.data % 2 != 0) {
+                lastOdd = current;
+                current = current.next;
+            }
+            if (lastOdd == null) {
+                newNode.next = head;
+                head.prev = newNode;
+                head = newNode;
+            } else {
+                newNode.next = lastOdd.next;
+                newNode.prev = lastOdd;
+                lastOdd.next = newNode;
+                if (newNode.next != null) {
+                    newNode.next.prev = newNode;
+                } else {
+                    tail = newNode;
+                }
+            }
         } else {
             tail.next = newNode;
             newNode.prev = tail;
@@ -62,16 +78,21 @@ class PriorityQueue extends Queue {
 public class Main {
     public static void main(String[] args) {
         PriorityQueue queue = new PriorityQueue();
-        queue.insert(117);
-        queue.insert(54);
-        queue.insert(4);
-        queue.insert(0);
-        queue.insert(111);
-        queue.insert(53);
-        queue.insert(12);
+        queue.insert(5);
+        queue.insert(6);
+        queue.remove();
+        queue.insert(7);
+        queue.insert(3);
+        queue.insert(10);
+        queue.remove();
+        queue.remove();
 
-        while (!queue.isEmpty()) {
-            System.out.print(queue.remove() + " ");
+        while (true) {
+            try {
+                System.out.print(queue.remove() + " ");
+            } catch (IllegalStateException e) {
+                break;
+            }
         }
     }
 }
